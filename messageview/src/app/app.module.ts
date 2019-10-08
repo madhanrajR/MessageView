@@ -7,6 +7,7 @@ import { LoginformComponent } from './components/loginform/loginform.component';
 import { SignupformComponent } from './components/signupform/signupform.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import {HttpClientModule} from '@angular/common/http'
 
 const appRoutes: Routes = [
   {
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
