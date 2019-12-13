@@ -14,7 +14,7 @@
         </div>
         <div class="card-body contacts_body">
           <ul class="contacts" *ngFor="let data of user">
-            <li [className]="receiverid==data._id ? 'active' : 'other-class'" (click)="receiverdetails(data)"> <!---class="active"-->
+            <li [className]="receiverid==data._id ? 'active' : 'other-class'" *ngIf="senderid!=data._id" (click)="receiverdetails(data)"> <!---class="active"-->
               <div class="d-flex bd-highlight">
                 <div class="img_cont">
                   <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
@@ -33,15 +33,15 @@
     </div>
     <div class="col-sm-9" style="padding-left: 0px;">
       <div class="card">
-        <div class="card-header msg_head">
+        <div class="card-header msg_head" *ngIf="receiverstatus">
           <div class="d-flex bd-highlight">
             <div class="img_cont">
               <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
               <span class="online_icon"></span>
             </div>
             <div class="user_info">
-              <span>Chat with Khalid</span>
-              <p>1767 Messages</p>
+              <span>Chat with {{receivername}}</span>
+              <!-- <p>1767 Messages</p> -->
             </div>
             <div class="video_cam">
               <span><i class="fas fa-video"></i></span>
@@ -58,34 +58,88 @@
             </ul>
           </div>
         </div>
-        <div class="card-body msg_card_body" *ngFor="let data of a">
-          <div class="d-flex justify-content-start mb-4">
+
+        <div class="card-header msg_head" *ngIf="!receiverstatus">
+          <div class="d-flex bd-highlight">
+            <div class="img_cont">
+              <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+              <span class="online_icon"></span>
+            </div>
+            <div class="user_info">
+              <span></span>
+              <!-- <p>1767 Messages</p> -->
+            </div>
+            <div class="video_cam">
+              <span><i class="fas fa-video"></i></span>
+              <span><i class="fas fa-phone"></i></span>
+            </div>
+          </div>
+          <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+          <div class="action_menu">
+            <ul>
+              <li><i class="fas fa-user-circle"></i> View profile</li>
+              <li><i class="fas fa-users"></i> Add to close friends</li>
+              <li><i class="fas fa-plus"></i> Add to group</li>
+              <li><i class="fas fa-ban"></i> Block</li>
+            </ul>
+          </div>
+        </div>
+
+                
+         <div class="card-body msg_card_body" *ngIf="msgstatus">
+          <div class="d-flex justify-content-start" *ngFor="let data of msg | keyvalue" >
             <div class="img_cont_msg">
-              <img src={{data.receiver_img}} class="rounded-circle user_img_msg">
+              <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
             </div>
             <div class="msg_cotainer">
-             {{data.receiver_msg}}
-              <span class="msg_time">{{data.reciever_time}}</span>
+             {{hai}} h2
+              <!-- <span class="msg_time">{{data.time}}</span> -->
             </div>
           </div>
-          <div class="d-flex justify-content-end mb-4">
+          <!-- <div class="d-flex justify-content-end" *ngIf="receiverid===data.value.id">
             <div class="msg_cotainer_send">
-                {{data.sender_msg}}
-              <span class="msg_time_send">{{data.sender_time}}</span>
+                {{data.message}}
+              <span class="msg_time_send">{{data.time}}</span>
             </div>
             <div class="img_cont_msg">
-              <img src={{data.sender_img}} class="rounded-circle user_img_msg">
+              <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+            </div>
+          </div> -->
+         </div>
+        <!-- <div class="card-body msg_card_body" >
+         
+          <div class="d-flex justify-content-start mb-4" *ngFor="let data of receivermsg| keyvalue">
+            <div class="img_cont_msg">
+              <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+            </div>
+            <div class="msg_cotainer">
+              {{data.value.message}}
+              <span class="msg_time">{{data.value.time | date:'dd/MM/yyyy h:mm:ss a'}}</span>
             </div>
           </div>
-         </div>
+       
+          <div class="d-flex justify-content-end mb-4" *ngFor="let data of sendermsg| keyvalue">
+            <div class="msg_cotainer_send">
+                {{data.value.message}}
+              
+              <span class="msg_time_send">{{data.value.time | date:'dd/MM/yyyy h:mm:ss a'}}</span>
+            </div>
+            <div class="img_cont_msg">
+              <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+            </div>
+          </div>
+         </div> -->
         <div class="card-footer">
+          <!-- <div  *ngFor="let data of msg | keys">
+             footer
+            </div> -->
           <div class="input-group">
             <div class="input-group-append">
               <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
             </div>
-            <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+            <textarea name="" #msg class="form-control type_msg" placeholder="Type your message..."></textarea>
             <div class="input-group-append">
-              <span class="input-group-text send_btn" (click)="sendmsg()"><i class="fas fa-location-arrow"></i></span>
+              <span class="input-group-text send_btn" (click)="sendmsg(msg.value)"><i class="fas fa-location-arrow"></i></span>
             </div>
           </div>
         </div>
